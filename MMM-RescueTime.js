@@ -59,8 +59,41 @@ Module.register("MMM-RescueTime", {
 		}
 		let ctx = document.createElement("canvas");
 		wrapper.appendChild(ctx);
+
+		// let abbrev_table = document.createElement("table");
+		// abbrev_table.style.width = '100%';
+		// for (var i = 0; i < labels.length; i++) {
+		// 	var tr = document.createElement('tr');
+		// 	for (var j = 0; j < 2; j++){
+		// 		var td = document.createElement('td');
+		// 		td.appendChild(document.createTextNode(labels[i]));
+		// 		tr.appendChild(td);
+		// 	}
+		// 	abbrev_table.appendChild(tr);
+		// }
+
+
+		// The full string is too long for low-res screen, use 2 abbrev keyworks
+		let labels_shortened = labels.map(label => label.substring(0,2));
+
+		let abbrev_table = document.createElement("div");
+		abbrev_table.style.fontSize = "0.4em";
+		abbrev_table.style.margin = "0";
+		abbrev_table.style.padding = "0";
+
+		table_txt = "";
+		for (var i = 0; i < labels.length; i++) {
+			var newline = labels_shortened[i] + ": " + labels[i];
+			table_txt += newline;
+			table_txt += "\n";
+		}
+		abbrev_table.innerText = table_txt;
+
+		wrapper.appendChild(abbrev_table);
+
+
 		let data = {
-			labels: labels,
+			labels: labels_shortened,
 			datasets: [
 				{
 					pointBackgroundColor: this.config.pointBackgroundColor,
@@ -82,9 +115,9 @@ Module.register("MMM-RescueTime", {
 					gridLines: {color: this.config.gridLinesColor},
 					ticks: {
 						backdropColor: "black",
-						fontSize: 15,
-						backdropPaddingX: 5,
-						backdropPaddingY: 5,
+						fontSize: 8,
+						backdropPaddingX: 0,
+						backdropPaddingY: 0,
 						fontColor: "#fff",
 					},
 				},
